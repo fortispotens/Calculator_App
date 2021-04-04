@@ -10,8 +10,22 @@ function buttonClick(value) {
   } else {
     handleNumber(value);
   }
+  screen.innerText = buffer;
 }
-function handleSymbol(symbol) {}
+function handleSymbol(symbol) {
+  console.log("handleSymbol", symbol);
+  switch (symbol) {
+    case "C":
+      buffer = "0";
+      runningTotal = 0;
+      break;
+    case "+":
+    case "−":
+    case "×":
+    case "÷":
+      break;
+  }
+}
 
 function handleNumber(numberString) {
   if (buffer === "0") {
@@ -19,7 +33,6 @@ function handleNumber(numberString) {
   } else {
     buffer += numberString;
   }
-  screen.innerText = buffer;
 }
 
 function init() {
