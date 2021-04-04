@@ -19,12 +19,53 @@ function handleSymbol(symbol) {
       buffer = "0";
       runningTotal = 0;
       break;
+    case "=":
+      if (previousOperator === null) {
+        return;
+      }
+      flushOperation(parseInt(buffer));
+      previousOperator = null;
+      buffer = runningTotal;
+      runningTotal = 0;
+      break;
     case "+":
     case "−":
     case "×":
     case "÷":
+      handleMath(symbol);
       break;
   }
+}
+
+function handleMath(symbol) {
+  if (buffer === "0") {
+    return;
+  }
+
+  const intBuffer = parseInt(buffer);
+
+  if (runningTotal === 0) {
+    runningTotal = intBuffer;
+  } else {
+    flushOperation(intBuffer);
+  }
+
+  previousOperator = symbol;
+
+  buffer = "0";
+}
+
+function flushOperation(intBuffer) {
+  if (previousOperator === "+") {
+    runningTotal += intBuffer;
+  } else if (previousOperator === "−") {
+    runningTotal -= intBuffer;
+  } else if (previousOperator === "×") {
+    runningTotal *= intBuffer;
+  } else {
+    runningTotal /= intBuffer;
+  }
+  console.log("running total", runningTotal);
 }
 
 function handleNumber(numberString) {
