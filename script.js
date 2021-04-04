@@ -13,7 +13,6 @@ function buttonClick(value) {
   screen.innerText = buffer;
 }
 function handleSymbol(symbol) {
-  console.log("handleSymbol", symbol);
   switch (symbol) {
     case "C":
       buffer = "0";
@@ -27,6 +26,13 @@ function handleSymbol(symbol) {
       previousOperator = null;
       buffer = runningTotal;
       runningTotal = 0;
+      break;
+    case "←":
+      if (buffer.length === 1) {
+        buffer = "0";
+      } else {
+        buffer = buffer.substring(0, buffer.length - 1);
+      }
       break;
     case "+":
     case "−":
@@ -65,7 +71,6 @@ function flushOperation(intBuffer) {
   } else {
     runningTotal /= intBuffer;
   }
-  console.log("running total", runningTotal);
 }
 
 function handleNumber(numberString) {
